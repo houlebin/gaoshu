@@ -1,0 +1,73 @@
+server:
+  #tomcat端口覆盖
+  port: 8888
+#Eureka配置
+eureka:
+  client:
+    # 注册中心服务地址，你要向哪个注册中心注册(默认就是http://localhost:8761/eureka/，如果都在本机可无需配置)
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    #当前应用是否注册到Eureka注册中心（默认就是true，因此无需配置）
+    #    register-with-eureka: true
+    #是否向Eureka注册中心拉取服务列表（默认就是true，因此无需配置）
+    #    fetch-registry: true
+    #向注册中心拉取列表的时间间隔（默认是30秒）
+    registry-fetch-interval-seconds: 20
+  instance:
+    #续约(租期更新)的间隔时间（默认30秒）-心跳
+    lease-renewal-interval-in-seconds: 20
+    #服务失效(租期到期)时间（默认90秒）
+    lease-expiration-duration-in-seconds: 50
+    # 更倾向于使用ip，而不是host名，会注册本机所有的ip,默认是false使用主机名来注册。
+    prefer-ip-address: true
+    # ip地址 固定上报一个IP地址给eureka server，缺点只注册指定的
+    #ip-address: 127.0.0.1
+
+
+spring:
+  application:
+    # 应用的名字，该名字会被注册到注册中心，而且，该名字也是集群名字
+    name: cart-provider
+  #jackson相关配置
+  jackson:
+    #参数意义：
+    #JsonInclude.Include.ALWAYS              默认
+    #JsonInclude.Include.NON_DEFAULT     属性为默认值不序列化
+    #JsonInclude.Include.NON_EMPTY         属性为 空（””） 或者为 NULL 都不序列化
+    #JsonInclude.Include.NON_NULL           属性为NULL   不序列化
+    default-property-inclusion: ALWAYS
+    #时区必须要设置
+    time-zone: GMT+8
+    # 日期格式
+    date-format: yyyy-MM-dd HH:mm:ss
+  #数据源配置
+  datasource:
+    #mysql 5-
+    #driver-class-name: com.mysql.jdbc.Driver
+    #mysql 6+（这里默认）
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/1801c?characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: root
+  servlet:
+    multipart:
+      #上传最大文件尺寸，默认是1MB
+      max-file-size: 20MB
+#MyBatisPlus配置
+mybatis-plus:
+  configuration:
+    #日志打印${ew.customSqlSegment}
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  #扫描的mapper配置文件的位置，默认为：classpath*:/mapper/**/*.xml
+#  mapper-locations: classpath*:/mapper/**/*.xml
+#日志级别配置
+#logging:
+#  level:
+#    #特殊：配置最跟（基本、所有默认的）日志级别，默认是info
+#    root: info
+#    #自定义某包，包括子包，下的日志采用什么日志级别
+#    cn.bobohost: debug
+##自定义属性
+#bobohost:
+#  #文件存储路径
+#  fileBasePath: D:/shbw1801a/upload
